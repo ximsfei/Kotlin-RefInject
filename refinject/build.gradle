@@ -1,0 +1,19 @@
+group 'com.ximsfei'
+version '0.0.2'
+
+apply plugin: 'kotlin'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+
+ext {
+    moduleName = 'refinject'
+    descContent = 'kotlin注解反射注入框架'
+}
+
+apply from: '../publishing_maven.gradle'

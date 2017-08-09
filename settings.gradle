@@ -1,3 +1,4 @@
 rootProject.name = 'Kotlin-RefInject'
 include 'refinject'
+include 'app'
 

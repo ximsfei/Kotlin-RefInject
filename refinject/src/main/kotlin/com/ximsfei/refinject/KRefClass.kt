@@ -3,7 +3,6 @@ package com.ximsfei.refinject
 import java.util.*
 import kotlin.reflect.*
 import kotlin.reflect.jvm.isAccessible
-import kotlin.reflect.jvm.javaField
 
 object KRefClass {
 
@@ -11,13 +10,13 @@ object KRefClass {
 
     init {
         REF_TYPES.put(KRefProperty::class.qualifiedName, KRefProperty::class.primaryConstructor)
+        REF_TYPES.put(KRefFunction::class.qualifiedName, KRefFunction::class.primaryConstructor)
     }
 
     fun load(mappingClass: KClass<*>, className: String): KClass<*>? {
         try {
             return load(mappingClass, Class.forName(className).kotlin)
         } catch (e: Exception) {
-            e.printStackTrace()
             return null
         }
     }
@@ -25,13 +24,16 @@ object KRefClass {
 
     fun load(mappingClass: KClass<*>, realClass: KClass<*>): KClass<*> {
         mappingClass.declaredMemberProperties.forEach {
-            val func = REF_TYPES[it.returnType.toString().replace("?", "")]
-            if (it is KMutableProperty1) {
-                it.setter.isAccessible = true
-                it.setter.call(mappingClass.objectInstance, func?.call(realClass, it))
+            try {
+                if (it is KMutableProperty1) {
+                    it.setter.isAccessible = true
+                    it.setter.call(mappingClass.objectInstance,
+                            REF_TYPES[it.returnType.toString().replace("?", "")]?.call(realClass, it))
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
         return realClass
     }
-
 }

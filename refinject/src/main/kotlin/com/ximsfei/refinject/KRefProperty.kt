@@ -4,18 +4,23 @@ import kotlin.reflect.*
 import kotlin.reflect.jvm.isAccessible
 import kotlin.reflect.jvm.javaField
 
-class KRefProperty
+class KRefProperty @Throws(NoSuchFieldException::class)
 constructor(cls: KClass<*>, property: KProperty<*>) {
-    val property: KProperty1<out Any, Any?>?
+    val property: KProperty1<out Any, Any?>
 
     init {
-        this.property = cls.declaredMemberProperties.filter {
+        val targetProperties = cls.declaredMemberProperties.filter {
             it.name == property.name
-        }.first()
+        }
+        if (!targetProperties.isEmpty()) {
+            this.property = targetProperties.first()
+        } else {
+            throw NoSuchFieldException("No such field: ${property.name}")
+        }
     }
 
     operator fun get(any: Any): Any? {
-        return property?.getter?.call(any)
+        return property.getter.call(any)
     }
 
     operator fun set(any: Any, value: Any) {
@@ -23,8 +28,8 @@ constructor(cls: KClass<*>, property: KProperty<*>) {
             property.setter.isAccessible = true
             property.setter.call(any, value)
         } else {
-            property?.javaField?.isAccessible = true
-            property?.javaField?.set(any, value)
+            property.javaField?.isAccessible = true
+            property.javaField?.set(any, value)
         }
     }
 }

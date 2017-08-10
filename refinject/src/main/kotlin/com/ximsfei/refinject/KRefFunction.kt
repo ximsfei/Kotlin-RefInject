@@ -26,18 +26,16 @@ constructor(cls: KClass<*>, property: KProperty<*>) {
         if (sameNameFuncs.isEmpty()) {
             throw NoSuchMethodException("No such method: ${property.name}")
         }
-        var targetFuncs: List<KFunction<*>> = ArrayList()
+        val targetFuncs: List<KFunction<*>>
         if (!funcAnnotations.isEmpty()) {
             targetFuncs = sameNameFuncs.filter {
                 funcParametersEquals(it, (funcAnnotations[0] as KFunctionParams).value)
             }
-        }
-        if (targetFuncs.isEmpty() && !funcRefAnnotations.isEmpty()) {
+        } else if (!funcRefAnnotations.isEmpty()) {
             targetFuncs = sameNameFuncs.filter {
                 funcRefParametersEquals(it, (funcRefAnnotations[0] as KFunctionRefParams).value)
             }
-        }
-        if (targetFuncs.isEmpty()) {
+        } else {
             targetFuncs = sameNameFuncs.filter {
                 it.parameters.size == 1
             }
@@ -58,6 +56,8 @@ constructor(cls: KClass<*>, property: KProperty<*>) {
                     break
                 }
             }
+        } else {
+            equals = false
         }
         return equals
     }
@@ -71,6 +71,8 @@ constructor(cls: KClass<*>, property: KProperty<*>) {
                     break
                 }
             }
+        } else {
+            equals = false
         }
         return equals
     }

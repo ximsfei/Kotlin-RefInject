@@ -7,7 +7,6 @@ object ActivityThread {
     var mInstrumentation: KRefProperty? = null
     var mApplication: KRefProperty? = null
     var mBoolean: KRefProperty? = null
-    @KFunctionParams(String::class)
     var getVal: KRefFunction? = null
     @KFunctionParams(Int::class, Int::class)
     var printAAndB: KRefFunction? = null

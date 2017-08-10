@@ -7,6 +7,10 @@ import kotlin.reflect.jvm.isAccessible
 
 class KRefFunction @Throws(NoSuchMethodException::class)
 constructor(cls: KClass<*>, property: KProperty<*>) {
+    companion object {
+        val propNullable: KRefFunction? = null
+    }
+
     var func: KFunction<*>
 
     init {

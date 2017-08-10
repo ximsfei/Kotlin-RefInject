@@ -6,6 +6,10 @@ import kotlin.reflect.jvm.javaField
 
 class KRefProperty @Throws(NoSuchFieldException::class)
 constructor(cls: KClass<*>, property: KProperty<*>) {
+    companion object {
+        val propNullable: KRefProperty? = null
+    }
+
     val property: KProperty1<out Any, Any?>
 
     init {

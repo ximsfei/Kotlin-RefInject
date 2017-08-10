@@ -18,3 +18,17 @@ ext {
 }
 
 apply from: '../publishing_maven.gradle'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file:///Users/ximsfei/local/repo")
+            pom.project {
+                groupId "com.ximsfei"
+                artifactId "refinject"
+                version "1.0.0"
+            }
+
+        }
+    }
+}

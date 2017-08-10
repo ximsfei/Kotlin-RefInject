@@ -10,7 +10,7 @@ public class JavaApp {
         System.out.println(origin);
         mirror.com.ximsfei.app.ActivityThread.INSTANCE.getMApplication().set(origin, "Inject Application");
         mirror.com.ximsfei.app.ActivityThread.INSTANCE.getMInstrumentation().set(origin, "Inject Instrumentation");
-        mirror.com.ximsfei.app.ActivityThread.INSTANCE.getMBoolean().set(origin, true);
+        mirror.com.ximsfei.app.ActivityThread.INSTANCE.getMBoolean().set(origin, false);
         System.out.println(mirror.com.ximsfei.app.ActivityThread.INSTANCE.getTYPE());
         System.out.println(origin);
     }

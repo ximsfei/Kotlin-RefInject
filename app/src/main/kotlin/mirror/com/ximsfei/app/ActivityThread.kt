@@ -1,12 +1,11 @@
 package mirror.com.ximsfei.app
 
-import com.ximsfei.refinject.RefBoolean
-import com.ximsfei.refinject.RefClass
-import com.ximsfei.refinject.RefObject
+import com.ximsfei.refinject.KRefProperty
+import com.ximsfei.refinject.KRefClass
 
 object ActivityThread {
-    var TYPE = RefClass.load(ActivityThread::class.java, "com.ximsfei.app.ActivityThread")
-    var mInstrumentation: RefObject<String>? = null
-    var mApplication: RefObject<String>? = null
-    var mBoolean: RefBoolean? = null
+    var TYPE = KRefClass.load(ActivityThread::class, "com.ximsfei.app.ActivityThread")
+    var mInstrumentation: KRefProperty? = null
+    var mApplication: KRefProperty? = null
+    var mBoolean: KRefProperty? = null
 }
